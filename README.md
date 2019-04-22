@@ -12,6 +12,25 @@ cd conbox
 go install ./conbox
 ```
 
+# Usage
+
+## Basename usage
+
+Create a symbolic link to 'conbox':
+
+```bash
+ln -s ~/go/bin/conbox ~/bin/cat
+~/bin/cat /etc/passwd
+```
+
+## Arg-1 usage
+
+Pass applet name as first argument to 'conbox':
+
+```bash
+conbox cat /etc/passwd
+```
+
 # Related work
 
 - https://github.com/surma/gobox
