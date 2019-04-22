@@ -31,6 +31,33 @@ Pass applet name as first argument to 'conbox':
 conbox cat /etc/passwd
 ```
 
+# Docker
+
+Build docker image:
+
+```bash
+./docker/build.sh
+```
+
+Tag image:
+
+```bash
+docker tag udhos/conbox udhos/conbox:latest
+```
+
+Push image:
+
+```bash
+docker login
+docker push udhos/conbox:latest
+```
+
+Run image:
+
+```bash
+docker run --rm udhos/conbox:latest cat /etc/passwd
+```
+
 # Related work
 
 - https://github.com/surma/gobox
