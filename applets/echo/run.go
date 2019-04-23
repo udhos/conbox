@@ -1,31 +1,29 @@
 package echo
 
 import (
-	"flag"
 	"fmt"
 )
 
 // Run executes the applet.
 func Run(args []string) int {
 
-	flagSet := flag.NewFlagSet("echo", flag.ExitOnError)
-	suppressNewline := flagSet.Bool("n", false, "Do not output the trailing newline")
+	var suppressNewline bool
 
-	if err := flagSet.Parse(args); err != nil {
-		return 1 // exit status
+	if len(args) > 0 {
+		suppressNewline = args[0] == "-n"
+		args = args[1:]
 	}
 
-	argList := flagSet.Args()
-	if len(argList) > 0 {
-		fmt.Print(argList[0])
+	if len(args) > 0 {
+		fmt.Print(args[0])
 	}
 
-	for i := 1; i < len(argList); i++ {
+	for i := 1; i < len(args); i++ {
 		fmt.Print(" ")
-		fmt.Print(argList[i])
+		fmt.Print(args[i])
 	}
 
-	if !*suppressNewline {
+	if !suppressNewline {
 		fmt.Println()
 	}
 
