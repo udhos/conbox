@@ -17,6 +17,7 @@ func Run(args []string) int {
 	recursive := flagSet.Bool("r", false, "Remove recursively into directories")
 
 	if err := flagSet.Parse(args); err != nil {
+		usage(flagSet)
 		return 1 // exit status
 	}
 
@@ -26,6 +27,7 @@ func Run(args []string) int {
 	}
 
 	if flagSet.NArg() < 1 {
+		fmt.Println("rm: missing operand")
 		usage(flagSet)
 		return 3
 	}
@@ -44,7 +46,7 @@ func Run(args []string) int {
 
 func usage(flagSet *flag.FlagSet) {
 	common.ShowVersion()
-	fmt.Println("rm [OPTION]... [FILE]...")
+	fmt.Println("rm [OPTION]... FILE...")
 	flagSet.PrintDefaults()
 }
 
