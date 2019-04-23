@@ -4,11 +4,17 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 
 	"github.com/udhos/conbox/applets/cat"
 )
 
+const conboxVersion = "0.0"
+
 func main() {
+
+	fmt.Printf("conbox: version %s runtime %s GOMAXPROC=%d OS=%s ARCH=%s\n", conboxVersion, runtime.Version(), runtime.GOMAXPROCS(0), runtime.GOOS, runtime.GOARCH)
+
 	appletTable := loadApplets()
 
 	// 1. try basename
