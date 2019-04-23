@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/udhos/conbox/common"
 )
 
 // Run executes the applet.
@@ -14,12 +16,12 @@ func Run(args []string) int {
 	helpFlag := flagSet.Bool("h", false, "Show command-line help")
 
 	if err := flagSet.Parse(args); err != nil {
+		usage(flagSet)
 		return 1 // exit status
 	}
 
 	if *helpFlag {
-		fmt.Println("cat [OPTION]... [FILE]...")
-		flagSet.PrintDefaults()
+		usage(flagSet)
 		return 2 // exit status
 	}
 
@@ -41,6 +43,12 @@ func Run(args []string) int {
 	}
 
 	return status // exit status
+}
+
+func usage(flagSet *flag.FlagSet) {
+	common.ShowVersion()
+	fmt.Println("cat [OPTION]... [FILE]...")
+	flagSet.PrintDefaults()
 }
 
 func catFile(path string) error {

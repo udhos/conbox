@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/udhos/conbox/common"
 )
 
 // Run executes the applet.
@@ -41,6 +43,7 @@ func Run(args []string) int {
 }
 
 func usage(flagSet *flag.FlagSet) {
+	common.ShowVersion()
 	fmt.Println("rm [OPTION]... [FILE]...")
 	flagSet.PrintDefaults()
 }
