@@ -13,8 +13,6 @@ const conboxVersion = "0.0"
 
 func main() {
 
-	fmt.Printf("conbox: version %s runtime %s GOMAXPROC=%d OS=%s ARCH=%s\n", conboxVersion, runtime.Version(), runtime.GOMAXPROCS(0), runtime.GOOS, runtime.GOARCH)
-
 	appletTable := loadApplets()
 
 	// 1. try basename
@@ -31,16 +29,22 @@ func main() {
 			run(applet, os.Args[2:])
 			return
 		}
+		showVersion()
 		fmt.Printf("conbox: arg 1: applet '%s' not found\n", appletName)
 	} else {
+		showVersion()
 		fmt.Printf("conbox: basename: applet '%s' not found\n", appletName)
 	}
 
-	fmt.Println("registered applets:")
+	fmt.Println("conbox: registered applets:")
 	for n := range appletTable {
 		fmt.Printf("%s ", n)
 	}
 	fmt.Println()
+}
+
+func showVersion() {
+	fmt.Printf("conbox: version %s runtime %s GOMAXPROC=%d OS=%s ARCH=%s\n", conboxVersion, runtime.Version(), runtime.GOMAXPROCS(0), runtime.GOOS, runtime.GOARCH)
 }
 
 func run(applet appletFunc, args []string) {
