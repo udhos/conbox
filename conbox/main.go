@@ -7,6 +7,7 @@ import (
 	"runtime"
 
 	"github.com/udhos/conbox/applets/cat"
+	"github.com/udhos/conbox/applets/echo"
 )
 
 const conboxVersion = "0.0"
@@ -88,5 +89,6 @@ type appletFunc func(args []string) int
 func loadApplets() map[string]appletFunc {
 	tab := map[string]appletFunc{}
 	tab["cat"] = cat.Run
+	tab["echo"] = echo.Run
 	return tab
 }
