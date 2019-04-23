@@ -14,9 +14,9 @@ go vet -vettool="$(which shadow)" ./applets/...
 go test ./applets/...
 go install -v ./applets/...
 
-hash gosimple 2>/dev/null && gosimple ./conbox
-hash golint 2>/dev/null && golint ./conbox
-hash staticcheck 2>/dev/null && staticcheck ./conbox
+#hash gosimple 2>/dev/null && gosimple ./conbox
+#hash golint 2>/dev/null && golint ./conbox
+#hash staticcheck 2>/dev/null && staticcheck ./conbox
 
 gofmt -s -w ./conbox
 go fix ./conbox
