@@ -22,6 +22,12 @@ func main() {
 		return
 	}
 
+	if appletName != "conbox" {
+		showVersion()
+		fmt.Printf("conbox: basename: applet '%s' not found\n", appletName)
+		return
+	}
+
 	// 2. try arg 1
 	if len(os.Args) > 1 {
 		appletName = os.Args[1]
@@ -31,9 +37,6 @@ func main() {
 		}
 		showVersion()
 		fmt.Printf("conbox: arg 1: applet '%s' not found\n", appletName)
-	} else {
-		showVersion()
-		fmt.Printf("conbox: basename: applet '%s' not found\n", appletName)
 	}
 
 	fmt.Println("conbox: registered applets:")
