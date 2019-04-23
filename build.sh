@@ -29,6 +29,18 @@ go test ./applets/...
 go install -v ./applets/...
 
 if [ -n "$lint" ]; then
+	hash gosimple 2>/dev/null && gosimple ./common
+	hash golint 2>/dev/null && golint ./common
+	hash staticcheck 2>/dev/null && staticcheck ./common
+fi
+
+gofmt -s -w ./common
+go fix ./common
+go vet -vettool="$(which shadow)" ./common
+go test ./common
+go install -v ./common
+
+if [ -n "$lint" ]; then
 	hash gosimple 2>/dev/null && gosimple ./conbox
 	hash golint 2>/dev/null && golint ./conbox
 	hash staticcheck 2>/dev/null && staticcheck ./conbox

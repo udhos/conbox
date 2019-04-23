@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
+	"sort"
 
 	"github.com/udhos/conbox/applets/cat"
 	"github.com/udhos/conbox/applets/echo"
+	"github.com/udhos/conbox/applets/rm"
+	"github.com/udhos/conbox/common"
 )
-
-const conboxVersion = "0.0"
 
 func main() {
 
@@ -24,9 +24,10 @@ func main() {
 	}
 
 	if appletName != "conbox" {
-		showVersion()
+		common.ShowVersion()
 		fmt.Printf("conbox: basename: applet '%s' not found\n", appletName)
-		return
+		usage(appletTable)
+		os.Exit(1)
 	}
 
 	// 2. try arg 1
@@ -34,6 +35,7 @@ func main() {
 		arg := os.Args[1]
 		switch arg {
 		case "-h":
+			common.ShowVersion()
 			usage(appletTable)
 			return
 		case "-l":
@@ -45,12 +47,15 @@ func main() {
 			run(applet, os.Args[2:])
 			return
 		}
-		showVersion()
+		common.ShowVersion()
 		fmt.Printf("conbox: arg 1: applet '%s' not found\n", appletName)
+		usage(appletTable)
+		os.Exit(2)
 	}
 
+	common.ShowVersion()
 	usage(appletTable)
-	os.Exit(1)
+	os.Exit(3)
 }
 
 func usage(tab map[string]appletFunc) {
@@ -58,23 +63,20 @@ func usage(tab map[string]appletFunc) {
 	fmt.Println("       conbox -h              : show command-line help")
 	fmt.Println("       conbox -l              : list applets")
 	fmt.Println()
-	registeredApplets(tab)
-}
-
-func registeredApplets(tab map[string]appletFunc) {
 	fmt.Println("conbox: registered applets:")
 	listApplets(tab, " ")
 	fmt.Println()
 }
 
 func listApplets(tab map[string]appletFunc, sep string) {
+	var list []string
 	for n := range tab {
+		list = append(list, n)
+	}
+	sort.Strings(list)
+	for _, n := range list {
 		fmt.Printf("%s%s", n, sep)
 	}
-}
-
-func showVersion() {
-	fmt.Printf("conbox: version %s runtime %s GOMAXPROC=%d OS=%s ARCH=%s\n", conboxVersion, runtime.Version(), runtime.GOMAXPROCS(0), runtime.GOOS, runtime.GOARCH)
 }
 
 func run(applet appletFunc, args []string) {
@@ -90,5 +92,6 @@ func loadApplets() map[string]appletFunc {
 	tab := map[string]appletFunc{}
 	tab["cat"] = cat.Run
 	tab["echo"] = echo.Run
+	tab["rm"] = rm.Run
 	return tab
 }

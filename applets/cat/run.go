@@ -18,7 +18,7 @@ func Run(args []string) int {
 	}
 
 	if *helpFlag {
-		fmt.Println("cat [OPTIONS]... [FILES]...")
+		fmt.Println("cat [OPTION]... [FILE]...")
 		flagSet.PrintDefaults()
 		return 2 // exit status
 	}
