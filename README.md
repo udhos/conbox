@@ -14,6 +14,18 @@ go install ./conbox
 
 # Usage
 
+## Available applets
+
+List available applets:
+
+```bash
+conbox
+```
+
+See all implemented applets here:
+
+https://github.com/udhos/conbox/tree/master/applets
+
 ## Basename usage
 
 Create a symbolic link to 'conbox':
@@ -32,6 +44,12 @@ conbox cat /etc/passwd
 ```
 
 # Docker
+
+Get 'conbox' as docker image `udhos/conbox:latest` from:
+
+https://hub.docker.com/r/udhos/conbox
+
+## Docker recipes
 
 Build docker image:
 
