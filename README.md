@@ -19,7 +19,14 @@ go install ./conbox
 List available applets:
 
 ```bash
-conbox
+$ conbox
+conbox: version 0.0 runtime go1.12.4 GOMAXPROC=12 OS=linux ARCH=amd64
+usage: conbox APPLET [ARG]... : run APPLET
+       conbox -h              : show command-line help
+       conbox -l              : list applets
+
+conbox: registered applets:
+cat echo ls rm 
 ```
 
 See all implemented applets here:
