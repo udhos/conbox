@@ -9,6 +9,7 @@ import (
 	"github.com/udhos/conbox/applets/cat"
 	"github.com/udhos/conbox/applets/echo"
 	"github.com/udhos/conbox/applets/ls"
+	"github.com/udhos/conbox/applets/pwd"
 	"github.com/udhos/conbox/applets/rm"
 	"github.com/udhos/conbox/common"
 )
@@ -90,10 +91,12 @@ func run(applet appletFunc, args []string) {
 type appletFunc func(args []string) int
 
 func loadApplets() map[string]appletFunc {
-	tab := map[string]appletFunc{}
-	tab["cat"] = cat.Run
-	tab["echo"] = echo.Run
-	tab["ls"] = ls.Run
-	tab["rm"] = rm.Run
+	tab := map[string]appletFunc{
+		"cat":  cat.Run,
+		"echo": echo.Run,
+		"ls":   ls.Run,
+		"pwd":  pwd.Run,
+		"rm":   rm.Run,
+	}
 	return tab
 }
