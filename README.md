@@ -4,6 +4,17 @@
 # conbox
 Go implementation of unix-like utilities as single static executable intended for small container images.
 
+* [Install](#install)
+* [Usage](#usage)
+  * [Available applets](#available-applets)
+  * [Basename usage](#basename-usage)
+  * [Arg\-1 usage](#arg-1-usage)
+* [Docker](#docker)
+  * [Docker recipes](#docker-recipes)
+* [Related work](#related-work)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
+
 # Install
 
 ```bash
