@@ -8,6 +8,7 @@ import (
 
 	"github.com/udhos/conbox/applets/cat"
 	"github.com/udhos/conbox/applets/echo"
+	"github.com/udhos/conbox/applets/ls"
 	"github.com/udhos/conbox/applets/rm"
 	"github.com/udhos/conbox/common"
 )
@@ -92,6 +93,7 @@ func loadApplets() map[string]appletFunc {
 	tab := map[string]appletFunc{}
 	tab["cat"] = cat.Run
 	tab["echo"] = echo.Run
+	tab["ls"] = ls.Run
 	tab["rm"] = rm.Run
 	return tab
 }
