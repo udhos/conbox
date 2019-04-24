@@ -3,10 +3,12 @@ package pwd
 import (
 	"fmt"
 	"os"
+
+	"github.com/udhos/conbox/common"
 )
 
 // Run executes the applet.
-func Run(args []string) int {
+func Run(tab map[string]common.AppletFunc, args []string) int {
 
 	dir, err := os.Getwd()
 

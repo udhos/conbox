@@ -10,7 +10,7 @@ import (
 )
 
 // Run executes the applet.
-func Run(args []string) int {
+func Run(tab map[string]common.AppletFunc, args []string) int {
 
 	flagSet := flag.NewFlagSet("rm", flag.ContinueOnError)
 	help := flagSet.Bool("h", false, "Show command-line help")

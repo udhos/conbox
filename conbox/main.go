@@ -11,6 +11,7 @@ import (
 	"github.com/udhos/conbox/applets/ls"
 	"github.com/udhos/conbox/applets/pwd"
 	"github.com/udhos/conbox/applets/rm"
+	"github.com/udhos/conbox/applets/shell"
 	"github.com/udhos/conbox/common"
 )
 
@@ -21,7 +22,7 @@ func main() {
 	// 1. try basename
 	appletName := filepath.Base(os.Args[0])
 	if applet, found := appletTable[appletName]; found {
-		run(applet, os.Args[1:])
+		run(appletTable, applet, os.Args[1:])
 		return
 	}
 
@@ -46,7 +47,7 @@ func main() {
 		}
 		appletName = arg
 		if applet, found := appletTable[appletName]; found {
-			run(applet, os.Args[2:])
+			run(appletTable, applet, os.Args[2:])
 			return
 		}
 		common.ShowVersion()
@@ -60,7 +61,7 @@ func main() {
 	os.Exit(3)
 }
 
-func usage(tab map[string]appletFunc) {
+func usage(tab map[string]common.AppletFunc) {
 	fmt.Println("usage: conbox APPLET [ARG]... : run APPLET")
 	fmt.Println("       conbox -h              : show command-line help")
 	fmt.Println("       conbox -l              : list applets")
@@ -70,7 +71,7 @@ func usage(tab map[string]appletFunc) {
 	fmt.Println()
 }
 
-func listApplets(tab map[string]appletFunc, sep string) {
+func listApplets(tab map[string]common.AppletFunc, sep string) {
 	var list []string
 	for n := range tab {
 		list = append(list, n)
@@ -81,22 +82,21 @@ func listApplets(tab map[string]appletFunc, sep string) {
 	}
 }
 
-func run(applet appletFunc, args []string) {
-	exitCode := applet(args)
+func run(tab map[string]common.AppletFunc, applet common.AppletFunc, args []string) {
+	exitCode := applet(tab, args)
 	if exitCode != 0 {
 		os.Exit(exitCode)
 	}
 }
 
-type appletFunc func(args []string) int
-
-func loadApplets() map[string]appletFunc {
-	tab := map[string]appletFunc{
-		"cat":  cat.Run,
-		"echo": echo.Run,
-		"ls":   ls.Run,
-		"pwd":  pwd.Run,
-		"rm":   rm.Run,
+func loadApplets() map[string]common.AppletFunc {
+	tab := map[string]common.AppletFunc{
+		"cat":   cat.Run,
+		"echo":  echo.Run,
+		"ls":    ls.Run,
+		"pwd":   pwd.Run,
+		"rm":    rm.Run,
+		"shell": shell.Run,
 	}
 	return tab
 }
