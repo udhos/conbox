@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/udhos/conbox)](https://goreportcard.com/report/github.com/udhos/conbox)
 
 # conbox
-Go implementation of unix-like utilities as single static executable intended for small container images.
+[conbox](https://github.com/udhos/conbox) is a Go implementation of unix-like utilities as single static executable intended for small container images.
 
 * [Install](#install)
 * [Usage](#usage)
@@ -96,8 +96,15 @@ docker run --rm udhos/conbox:latest cat /etc/passwd
 
 # Related work
 
+# Go Projects
+
+Unfortunately these projects seem inactive:
+
 - https://github.com/surma/gobox
 - https://github.com/laher/someutils
 - https://github.com/shirou/toybox
+
+## Non-Go projects
+
 - https://www.busybox.net/
 - http://landley.net/toybox/
