@@ -96,7 +96,7 @@ docker run --rm udhos/conbox:latest cat /etc/passwd
 
 # Related work
 
-# Go Projects
+## Go Projects
 
 Unfortunately these projects seem inactive:
 
