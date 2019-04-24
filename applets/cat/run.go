@@ -12,7 +12,7 @@ import (
 // Run executes the applet.
 func Run(args []string) int {
 
-	flagSet := flag.NewFlagSet("cat", flag.ExitOnError)
+	flagSet := flag.NewFlagSet("cat", flag.ContinueOnError)
 	helpFlag := flagSet.Bool("h", false, "Show command-line help")
 
 	if err := flagSet.Parse(args); err != nil {

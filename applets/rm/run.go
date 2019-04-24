@@ -12,7 +12,7 @@ import (
 // Run executes the applet.
 func Run(args []string) int {
 
-	flagSet := flag.NewFlagSet("rm", flag.ExitOnError)
+	flagSet := flag.NewFlagSet("rm", flag.ContinueOnError)
 	help := flagSet.Bool("h", false, "Show command-line help")
 	recursive := flagSet.Bool("r", false, "Remove recursively into directories")
 
