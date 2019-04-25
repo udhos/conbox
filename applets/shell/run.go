@@ -30,8 +30,25 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 	}
 
 	if flagSet.NArg() < 1 {
-		return loop(tab, os.Stdin, true)
+
+		// read input from stdin
+
+		stdin := os.Stdin
+		if !*interactive {
+			// check if stdin is terminal (interactive mode)
+			info, errStat := stdin.Stat()
+			if errStat != nil {
+				fmt.Printf("shell: stat stdin: %v\n", errStat)
+			} else {
+				if (info.Mode() & os.ModeCharDevice) != 0 {
+					*interactive = true
+				}
+			}
+		}
+		return loop(tab, stdin, *interactive)
 	}
+
+	// read input from file
 
 	list := flagSet.Args()
 	input := list[0]
