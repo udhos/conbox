@@ -13,7 +13,9 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 
 	if len(args) > 0 {
 		suppressNewline = args[0] == "-n"
-		args = args[1:]
+		if suppressNewline {
+			args = args[1:]
+		}
 	}
 
 	if len(args) > 0 {

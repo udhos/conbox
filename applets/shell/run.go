@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/udhos/conbox/common"
@@ -66,8 +67,14 @@ func loop(tab map[string]common.AppletFunc, r io.Reader, interactive bool) int {
 
 	if interactive {
 		common.ShowVersion()
-		fmt.Println("welcome to conbox shell")
-		fmt.Println()
+		fmt.Print(`
+welcome to conbox tiny shell.
+this tiny shell is very limited in features.
+type 'conbox' to see all applets available as commands.
+you can also call external programs normally.
+use the 'exit' built-in command to terminate the shell.
+
+`)
 	}
 
 	input := bufio.NewReader(r)
@@ -130,9 +137,31 @@ func execute(tab map[string]common.AppletFunc, params []string) (bool, int) {
 		return false, applet(tab, params[1:])
 	}
 
-	// 3. lookup PATH
+	// 3. external program
 
-	fmt.Printf("shell: not found: %s\n", prog)
+	return false, external(params)
+}
 
-	return false, 0
+func external(params []string) int {
+
+	c := exec.Command(params[0], params[1:]...)
+
+	c.Stdout = os.Stdout
+	c.Stdin = os.Stdin
+	c.Stderr = os.Stderr
+
+	if errStart := c.Start(); errStart != nil {
+		fmt.Printf("shell: %v\n", errStart)
+		return 30
+	}
+
+	if errWait := c.Wait(); errWait != nil {
+		if err, isExit := errWait.(*exec.ExitError); isExit {
+			return err.ExitCode()
+		}
+		fmt.Printf("shell: uexpected exit error: %v\n", errWait)
+		return 31
+	}
+
+	return 0
 }

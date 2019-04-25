@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 
 	"github.com/udhos/conbox/common"
 )
@@ -75,7 +76,7 @@ func rmDir(path string) error {
 	}
 
 	for _, f := range list {
-		p := path + "/" + f.Name()
+		p := filepath.Join(path, f.Name())
 		if errRm := rm(p, true); errRm != nil {
 			fmt.Printf("rm: %v\n", errRm)
 		}

@@ -76,7 +76,6 @@ func lsDir(path string) error {
 	}
 
 	for _, f := range list {
-		//p := path + "/" + f.Name()
 		fmt.Println(f.Name())
 	}
 
