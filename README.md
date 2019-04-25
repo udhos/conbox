@@ -11,6 +11,7 @@
   * [Subcommand usage](#subcommand-usage)
   * [Shell usage](#shell-usage)
 * [Docker](#docker)
+  * [Run in docker](#run-in-docker)
   * [Docker recipes](#docker-recipes)
 * [Related work](#related-work)
   * [Go Projects](#go-projects)
@@ -90,6 +91,20 @@ Get 'conbox' as docker image `udhos/conbox:latest` from:
 
 https://hub.docker.com/r/udhos/conbox
 
+## Run in docker
+
+Run applet:
+
+```bash
+docker run --rm udhos/conbox:latest cat /etc/passwd
+```
+
+Run interactive shell:
+
+```bash
+docker run --rm -ti udhos/conbox:latest shell
+```
+
 ## Docker recipes
 
 Build docker image:
@@ -109,18 +124,6 @@ Push image:
 ```bash
 docker login
 docker push udhos/conbox:latest
-```
-
-Run image:
-
-```bash
-docker run --rm udhos/conbox:latest cat /etc/passwd
-```
-
-Run interactive shell:
-
-```bash
-docker run --rm -ti udhos/conbox:latest shell
 ```
 
 # Related work
