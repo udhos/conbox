@@ -9,9 +9,12 @@
   * [Available applets](#available-applets)
   * [Basename usage](#basename-usage)
   * [Arg\-1 usage](#arg-1-usage)
+  * [Shell usage](#shell-usage)
 * [Docker](#docker)
   * [Docker recipes](#docker-recipes)
 * [Related work](#related-work)
+  * [Go Projects](#go-projects)
+  * [Non\-Go projects](#non-go-projects)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
