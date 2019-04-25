@@ -65,16 +65,23 @@ func usage(flagSet *flag.FlagSet) {
 
 func loop(tab map[string]common.AppletFunc, r io.Reader, interactive bool) int {
 
+	builtins := loadBuiltins()
+
 	if interactive {
 		common.ShowVersion()
 		fmt.Print(`
-welcome to conbox tiny shell.
+welcome to conbox shell.
 this tiny shell is very limited in features.
 type 'conbox' to see all applets available as commands.
 you can also call external programs normally.
 use the 'exit' built-in command to terminate the shell.
 
 `)
+
+		fmt.Println("shell built-in commands:")
+		listBuiltins(builtins, " ")
+		fmt.Println()
+		fmt.Println()
 	}
 
 	input := bufio.NewReader(r)
@@ -111,7 +118,7 @@ LOOP:
 			continue // comment
 		}
 
-		exit, status := execute(tab, parameters)
+		exit, status := execute(tab, builtins, parameters)
 		if exit {
 			return status
 		}
@@ -120,15 +127,14 @@ LOOP:
 	return 0
 }
 
-func execute(tab map[string]common.AppletFunc, params []string) (bool, int) {
+func execute(tab map[string]common.AppletFunc, builtins map[string]builtinFunc, params []string) (bool, int) {
 
 	prog := params[0]
 
 	// 1. lookup shell built-in
 
-	switch prog {
-	case "exit":
-		return true, 0
+	if b, found := builtins[prog]; found {
+		return b(builtins, params[1:])
 	}
 
 	// 2. lookup conbox applet
@@ -137,7 +143,7 @@ func execute(tab map[string]common.AppletFunc, params []string) (bool, int) {
 		return false, applet(tab, params[1:])
 	}
 
-	// 3. external program
+	// 3. call external program
 
 	return false, external(params)
 }
