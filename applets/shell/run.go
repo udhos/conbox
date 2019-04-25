@@ -72,9 +72,11 @@ func loop(tab map[string]common.AppletFunc, r io.Reader, interactive bool) int {
 		fmt.Print(`
 welcome to conbox shell.
 this tiny shell is very limited in features.
-type 'conbox' to see all applets available as commands.
-you can also call external programs normally.
-use the 'exit' built-in command to terminate the shell.
+however you can run external programs normally.
+some hints:
+       - use 'conbox' to see all applets available as shell commands.
+       - use 'help' to list shell built-in commands.
+       - 'exit' terminates the shell.
 
 `)
 
