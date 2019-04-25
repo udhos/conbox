@@ -66,7 +66,7 @@ conbox cat /etc/passwd
 
 ## Shell usage
 
-All applets are also drectly available from within conbox shell:
+All applets are also directly available from within conbox shell:
 
 ```bash
 $ conbox shell
