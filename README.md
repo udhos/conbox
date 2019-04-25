@@ -36,13 +36,14 @@ List available applets:
 
 ```bash
 $ conbox
-conbox: version 0.0 runtime go1.12.4 GOMAXPROC=12 OS=linux ARCH=amd64
+conbox: version 0.0 runtime go1.12.4 GOMAXPROC=1 OS=linux ARCH=amd64
+
 usage: conbox APPLET [ARG]... : run APPLET
        conbox -h              : show command-line help
        conbox -l              : list applets
 
 conbox: registered applets:
-cat echo ls rm 
+cat echo ls mkdir printenv pwd rm rmdir shell which
 ```
 
 See all implemented applets here:
@@ -72,18 +73,18 @@ All applets are also directly available from within conbox shell:
 
 ```bash
 $ conbox shell
-conbox: version 0.0 runtime go1.12.4 GOMAXPROC=12 OS=linux ARCH=amd64
+conbox: version 0.0 runtime go1.12.4 GOMAXPROC=1 OS=linux ARCH=amd64
 
 welcome to conbox shell.
 this tiny shell is very limited in features.
-type 'conbox' to see all applets available as commands.
-you can also call external programs normally.
-use the 'exit' built-in command to terminate the shell.
+however you can run external programs normally.
+some hints:
+       - use 'conbox' to see all applets available as shell commands.
+       - use 'help' to list shell built-in commands.
+       - 'exit' terminates the shell.
 
 shell built-in commands:
-builtins cd exit 
-
-conbox shell$ 
+builtin cd exit help
 ```
 
 # Adding new applet
