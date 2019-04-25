@@ -85,6 +85,8 @@ some hints:
 
 shell built-in commands:
 builtin cd exit help
+
+conbox shell$
 ```
 
 # Adding new applet
