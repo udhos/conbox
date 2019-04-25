@@ -8,7 +8,7 @@
 * [Usage](#usage)
   * [Available applets](#available-applets)
   * [Basename usage](#basename-usage)
-  * [Arg\-1 usage](#arg-1-usage)
+  * [Subcommand usage](#subcommand-usage)
   * [Shell usage](#shell-usage)
 * [Docker](#docker)
   * [Docker recipes](#docker-recipes)
