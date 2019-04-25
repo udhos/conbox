@@ -62,6 +62,7 @@ func main() {
 }
 
 func usage(tab map[string]common.AppletFunc) {
+	fmt.Println()
 	fmt.Println("usage: conbox APPLET [ARG]... : run APPLET")
 	fmt.Println("       conbox -h              : show command-line help")
 	fmt.Println("       conbox -l              : list applets")
