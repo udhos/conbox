@@ -149,23 +149,37 @@ func expand(params []string) []string {
 
 	// 1. expand env vars
 
+	//fmt.Printf("== %d %v\n", len(params), params)
+
 	var exp1 []string
 	for _, p := range params {
 		exp1 = append(exp1, os.ExpandEnv(p))
 	}
 
+	//fmt.Printf("$$ %d %v\n", len(exp1), exp1)
+
 	// 2. expand file globs
 
 	var exp2 []string
 	for _, p := range exp1 {
+		if p == "" {
+			exp2 = append(exp2, p)
+			continue
+		}
 		g, errGlob := filepath.Glob(p)
 		if errGlob != nil {
 			fmt.Printf("shell: glob: %v", errGlob)
-			exp2 = append(exp2, p) // keep unexpanded
+			exp2 = append(exp2, p)
+			continue
+		}
+		if len(g) < 1 {
+			exp2 = append(exp2, p)
 			continue
 		}
 		exp2 = append(exp2, g...)
 	}
+
+	//fmt.Printf("** %d %v\n", len(exp2), exp2)
 
 	return exp2
 }
