@@ -56,9 +56,9 @@ ln -s ~/go/bin/conbox ~/bin/cat
 ~/bin/cat /etc/passwd
 ```
 
-## Arg-1 usage
+## Subcommand usage
 
-Pass applet name as first argument to 'conbox':
+Pass applet name as subcommand to 'conbox':
 
 ```bash
 conbox cat /etc/passwd
