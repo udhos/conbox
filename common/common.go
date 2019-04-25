@@ -7,6 +7,7 @@ import (
 
 const version = "0.0"
 
+// AppletFunc type is the signature for the applet Run() function.
 type AppletFunc func(tab map[string]AppletFunc, args []string) int
 
 // ShowVersion prints conbox version.

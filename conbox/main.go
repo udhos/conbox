@@ -6,12 +6,6 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/udhos/conbox/applets/cat"
-	"github.com/udhos/conbox/applets/echo"
-	"github.com/udhos/conbox/applets/ls"
-	"github.com/udhos/conbox/applets/pwd"
-	"github.com/udhos/conbox/applets/rm"
-	"github.com/udhos/conbox/applets/shell"
 	"github.com/udhos/conbox/common"
 )
 
@@ -88,16 +82,4 @@ func run(tab map[string]common.AppletFunc, applet common.AppletFunc, args []stri
 	if exitCode != 0 {
 		os.Exit(exitCode)
 	}
-}
-
-func loadApplets() map[string]common.AppletFunc {
-	tab := map[string]common.AppletFunc{
-		"cat":   cat.Run,
-		"echo":  echo.Run,
-		"ls":    ls.Run,
-		"pwd":   pwd.Run,
-		"rm":    rm.Run,
-		"shell": shell.Run,
-	}
-	return tab
 }

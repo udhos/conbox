@@ -10,6 +10,7 @@
   * [Basename usage](#basename-usage)
   * [Subcommand usage](#subcommand-usage)
   * [Shell usage](#shell-usage)
+* [Adding new applet](#adding-new-applet)
 * [Docker](#docker)
   * [Run in docker](#run-in-docker)
   * [Docker recipes](#docker-recipes)
@@ -83,6 +84,59 @@ shell built-in commands:
 builtins cd exit 
 
 conbox shell$ 
+```
+
+# Adding new applet
+
+1. Create a new package for the applet under directory 'applets'. The package must export the function Run() as show in example below.
+
+```
+$ more applets/myapp/run.go
+package myapp // put applet myapp in package myapp
+
+import (
+        "fmt"
+
+        "github.com/udhos/conbox/common"
+)
+
+// Run executes the applet.
+func Run(tab map[string]common.AppletFunc, args []string) int {
+
+        fmt.Println("myapp: hello")
+
+        return 0 // exit status
+}
+```
+
+2. In file 'conbox/applets.go', import the applet package and include its Run() function in the applet table: 
+
+```
+$ more conbox/applets.go
+package main
+
+import (
+	// (...)
+        "github.com/udhos/conbox/applets/myapp" // <-- import the applet package
+	// (...)
+)
+
+func loadApplets() map[string]common.AppletFunc {
+        tab := map[string]common.AppletFunc{
+		// (...)
+                "myapp": myapp.Run, // <-- point applet name to its Run() function
+		// (...)
+        }
+        return tab
+}
+```
+
+3. Rebuild conbox and test the new applet:
+
+```
+$ go install ./conbox
+$ conbox myapp
+myapp: hello
 ```
 
 # Docker
