@@ -46,7 +46,7 @@ https://github.com/udhos/conbox/tree/master/applets
 
 ## Basename usage
 
-Create a symbolic link to 'conbox':
+You can create a symbolic link for a supported applet pointing to 'conbox':
 
 ```bash
 ln -s ~/go/bin/conbox ~/bin/cat
@@ -59,6 +59,26 @@ Pass applet name as first argument to 'conbox':
 
 ```bash
 conbox cat /etc/passwd
+```
+
+## Shell usage
+
+All applets are also drectly available from within conbox shell:
+
+```bash
+$ conbox shell
+conbox: version 0.0 runtime go1.12.4 GOMAXPROC=12 OS=linux ARCH=amd64
+
+welcome to conbox shell.
+this tiny shell is very limited in features.
+type 'conbox' to see all applets available as commands.
+you can also call external programs normally.
+use the 'exit' built-in command to terminate the shell.
+
+shell built-in commands:
+builtins cd exit 
+
+conbox shell$ 
 ```
 
 # Docker
