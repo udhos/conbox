@@ -3,8 +3,9 @@ package echo
 import (
 	"io/ioutil"
 	"os"
-	"strings"
 	"testing"
+
+	"github.com/udhos/conbox/common"
 )
 
 type testEcho struct {
@@ -26,7 +27,7 @@ var testTable = []testEcho{
 
 func TestEcho1(t *testing.T) {
 	for _, data := range testTable {
-		args := strings.Fields(data.input)
+		args := common.Tokenize(data.input)
 		echo1(t, args, data.status, data.output)
 	}
 }

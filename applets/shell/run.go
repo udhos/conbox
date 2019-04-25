@@ -7,7 +7,6 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/udhos/conbox/common"
 )
@@ -120,7 +119,7 @@ LOOP:
 			return 10
 		}
 
-		parameters := strings.Fields(line)
+		parameters := common.Tokenize(line)
 
 		if len(parameters) < 1 {
 			continue // empty line
@@ -147,23 +146,30 @@ LOOP:
 
 func execute(tab map[string]common.AppletFunc, builtins map[string]builtinFunc, params []string) (bool, int) {
 
-	prog := params[0]
+	var exp []string
+
+	// expand params into exp
+	for _, p := range params {
+		exp = append(exp, os.ExpandEnv(p))
+	}
+
+	prog := exp[0]
 
 	// 1. lookup shell built-in
 
 	if b, found := builtins[prog]; found {
-		return b(builtins, params[1:])
+		return b(builtins, exp[1:])
 	}
 
 	// 2. lookup conbox applet
 
 	if applet, found := tab[prog]; found {
-		return false, applet(tab, params[1:])
+		return false, applet(tab, exp[1:])
 	}
 
 	// 3. call external program
 
-	return false, external(params)
+	return false, external(exp)
 }
 
 func external(params []string) int {
