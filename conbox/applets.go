@@ -9,6 +9,7 @@ import (
 	"github.com/udhos/conbox/applets/rm"
 	"github.com/udhos/conbox/applets/rmdir"
 	"github.com/udhos/conbox/applets/shell"
+	"github.com/udhos/conbox/applets/which"
 	"github.com/udhos/conbox/common"
 )
 
@@ -22,6 +23,7 @@ func loadApplets() map[string]common.AppletFunc {
 		"rm":    rm.Run,
 		"rmdir": rmdir.Run,
 		"shell": shell.Run,
+		"which": which.Run,
 	}
 	return tab
 }
