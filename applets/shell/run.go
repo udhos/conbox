@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/udhos/conbox/common"
 )
@@ -144,14 +145,34 @@ LOOP:
 	return 0
 }
 
+func expand(params []string) []string {
+
+	// 1. expand env vars
+
+	var exp1 []string
+	for _, p := range params {
+		exp1 = append(exp1, os.ExpandEnv(p))
+	}
+
+	// 2. expand file globs
+
+	var exp2 []string
+	for _, p := range exp1 {
+		g, errGlob := filepath.Glob(p)
+		if errGlob != nil {
+			fmt.Printf("shell: glob: %v", errGlob)
+			exp2 = append(exp2, p) // keep unexpanded
+			continue
+		}
+		exp2 = append(exp2, g...)
+	}
+
+	return exp2
+}
+
 func execute(tab map[string]common.AppletFunc, builtins map[string]builtinFunc, params []string) (bool, int) {
 
-	var exp []string
-
-	// expand params into exp
-	for _, p := range params {
-		exp = append(exp, os.ExpandEnv(p))
-	}
+	exp := expand(params)
 
 	prog := exp[0]
 
