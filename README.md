@@ -114,6 +114,12 @@ Run image:
 docker run --rm udhos/conbox:latest cat /etc/passwd
 ```
 
+Run interactive shell:
+
+```bash
+docker run --rm -ti udhos/conbox:latest shell
+```
+
 # Related work
 
 ## Go Projects
