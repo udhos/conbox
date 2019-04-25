@@ -30,6 +30,7 @@ func listBuiltins(builtins map[string]builtinFunc, sep string) {
 }
 
 func builtinHelp(builtins map[string]builtinFunc, params []string) (bool, int) {
+	fmt.Println("shell built-in commands:")
 	listBuiltins(builtins, " ")
 	fmt.Println()
 	return false, 0

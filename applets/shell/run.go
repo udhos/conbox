@@ -97,9 +97,8 @@ some hints:
 
 `)
 
-		fmt.Println("shell built-in commands:")
-		listBuiltins(builtins, " ")
-		fmt.Println()
+		builtinHelp(builtins, nil)
+
 		fmt.Println()
 	}
 
