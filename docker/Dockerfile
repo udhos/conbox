@@ -2,7 +2,8 @@
 
 #FROM golang:alpine as builder
 FROM golang:1.12.4-alpine as builder
-RUN apk add --no-cache git
+#RUN apk add --no-cache git
+RUN apk add git
 
 # Create appuser on builder image
 RUN adduser -D -g '' conboxuser
