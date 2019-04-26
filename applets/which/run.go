@@ -53,16 +53,17 @@ func which(cmd string, paths []string) int {
 	for _, p := range paths {
 		full := filepath.Join(p, cmd)
 		info, errStat := os.Stat(full)
-		if errStat == nil {
-			if info.IsDir() {
-				continue
-			}
-			if (info.Mode() & 0111) == 0 {
-				continue
-			}
-			fmt.Println(full)
-			return 0
+		if errStat != nil {
+			continue
 		}
+		if info.IsDir() {
+			continue
+		}
+		if (info.Mode() & 0111) == 0 {
+			continue
+		}
+		fmt.Println(full)
+		return 0
 	}
 	return 1
 }
