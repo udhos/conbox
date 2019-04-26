@@ -102,12 +102,20 @@ some hints:
 		fmt.Println()
 	}
 
+	euid := os.Geteuid()
+
 	input := bufio.NewReader(r)
 
 LOOP:
 	for {
 		if interactive {
-			fmt.Print("conbox shell$ ")
+			var prompt string
+			if euid == 0 {
+				prompt = "#"
+			} else {
+				prompt = "$"
+			}
+			fmt.Printf("conbox shell%s ", prompt)
 		}
 
 		line, errInput := input.ReadString('\n')
