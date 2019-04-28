@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/udhos/conbox/applets/cat"
+	"github.com/udhos/conbox/applets/cp"
 	"github.com/udhos/conbox/applets/echo"
 	"github.com/udhos/conbox/applets/ls"
 	"github.com/udhos/conbox/applets/mkdir"
@@ -19,6 +20,7 @@ import (
 func loadApplets() map[string]common.AppletFunc {
 	tab := map[string]common.AppletFunc{
 		"cat":      cat.Run,
+		"cp":       cp.Run,
 		"echo":     echo.Run,
 		"ls":       ls.Run,
 		"mkdir":    mkdir.Run,
