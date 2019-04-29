@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"strings"
 )
@@ -19,4 +20,10 @@ func ShowVersion() {
 // Tokenize parses an input line into tokens.
 func Tokenize(line string) []string {
 	return strings.Fields(line) // FIXME WRITEME
+}
+
+// IsDir reports if path exists as directory.
+func IsDir(path string) bool {
+	stat, errStat := os.Stat(path)
+	return errStat == nil && stat.IsDir()
 }

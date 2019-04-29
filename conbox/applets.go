@@ -6,6 +6,7 @@ import (
 	"github.com/udhos/conbox/applets/echo"
 	"github.com/udhos/conbox/applets/ls"
 	"github.com/udhos/conbox/applets/mkdir"
+	"github.com/udhos/conbox/applets/mv"
 	"github.com/udhos/conbox/applets/printenv"
 	"github.com/udhos/conbox/applets/ps"
 	"github.com/udhos/conbox/applets/pwd"
@@ -24,6 +25,7 @@ func loadApplets() map[string]common.AppletFunc {
 		"echo":     echo.Run,
 		"ls":       ls.Run,
 		"mkdir":    mkdir.Run,
+		"mv":       mv.Run,
 		"printenv": printenv.Run,
 		"pwd":      pwd.Run,
 		"ps":       ps.Run,
