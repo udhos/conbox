@@ -45,7 +45,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 
 func usage(flagSet *flag.FlagSet) {
 	common.ShowVersion()
-	fmt.Println("cp [OPTION]... SOURCE DESTINATION")
+	fmt.Println("cp [OPTION]... SOURCE... DESTINATION")
 	flagSet.PrintDefaults()
 }
 
@@ -66,7 +66,7 @@ func cp(recursive bool, list []string) error {
 	srcMultiple := len(list) > 2
 	if srcMultiple {
 		if !dstDir {
-			// create dir
+			// create dst dir
 			if errMkdir := os.Mkdir(dst, 0777); errMkdir != nil {
 				return errMkdir
 			}
