@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/udhos/conbox/common"
 )
@@ -34,7 +35,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 
 	list := flagSet.Args()
 
-	if errCp := cp(*recursive, list[0], list[1]); errCp != nil {
+	if errCp := cp(*recursive, list); errCp != nil {
 		fmt.Printf("cp: %v\n", errCp)
 		return 4
 	}
@@ -48,7 +49,50 @@ func usage(flagSet *flag.FlagSet) {
 	flagSet.PrintDefaults()
 }
 
-func cp(recursive bool, src, dst string) error {
+func isDir(path string) bool {
+	stat, errStat := os.Stat(path)
+	return errStat == nil && stat.IsDir()
+}
+
+func cp(recursive bool, list []string) error {
+	if len(list) < 2 {
+		return fmt.Errorf("cp: missing operand")
+	}
+
+	last := len(list) - 1
+	dst := list[last]
+	dstDir := isDir(dst)
+
+	srcMultiple := len(list) > 2
+	if srcMultiple {
+		if !dstDir {
+			// create dir
+			if errMkdir := os.Mkdir(dst, 0777); errMkdir != nil {
+				return errMkdir
+			}
+			dstDir = true
+		}
+	}
+
+	var errLast error
+	for i := 0; i < last; i++ {
+		src := list[i]
+		var dstFull string
+		if dstDir {
+			dstFull = filepath.Join(dst, filepath.Base(src))
+		} else {
+			dstFull = dst
+		}
+		errCp := cpFile(src, dstFull)
+		if errCp != nil {
+			fmt.Printf("cp: %v\n", errCp)
+			errLast = errCp
+		}
+	}
+	return errLast
+}
+
+func cpFile(src, dst string) error {
 
 	statSrc, errStatSrc := os.Stat(src)
 	if errStatSrc != nil {
