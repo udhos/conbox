@@ -59,11 +59,7 @@ func mv(list []string) error {
 	srcMultiple := len(list) > 2
 	if srcMultiple {
 		if !dstDir {
-			// create dst dir
-			if errMkdir := os.Mkdir(dst, 0777); errMkdir != nil {
-				return errMkdir
-			}
-			dstDir = true
+			return fmt.Errorf("%s: destination is not a directory", dst)
 		}
 	}
 
