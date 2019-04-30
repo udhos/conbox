@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"syscall"
 
 	"github.com/udhos/conbox/common"
 )
@@ -115,7 +116,17 @@ func showFileMode(info os.FileInfo) {
 	showBool(mode&0004 != 0, "r")
 	showBool(mode&0002 != 0, "w")
 	showBool(mode&0001 != 0, "x")
-	fmt.Print(" ")
+
+	uid := -1
+	gid := -1
+
+	sys := info.Sys()
+	if s, ok := sys.(*syscall.Stat_t); ok {
+		uid = int(s.Uid)
+		gid = int(s.Gid)
+	}
+
+	fmt.Printf(" %4d %4d ", uid, gid)
 }
 
 func showBool(value bool, ifTrue string) {
