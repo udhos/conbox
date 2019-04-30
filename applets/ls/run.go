@@ -12,21 +12,24 @@ import (
 // Run executes the applet.
 func Run(tab map[string]common.AppletFunc, args []string) int {
 
+	var help, long bool
+
 	flagSet := flag.NewFlagSet("ls", flag.ContinueOnError)
-	help := flagSet.Bool("h", false, "Show command-line help")
+	flagSet.BoolVar(&help, "h", false, "Show command-line help")
+	flagSet.BoolVar(&long, "l", false, "Long list mode")
 
 	if err := flagSet.Parse(args); err != nil {
 		usage(flagSet)
 		return 1 // exit status
 	}
 
-	if *help {
+	if help {
 		usage(flagSet)
 		return 2 // exit status
 	}
 
 	if flagSet.NArg() < 1 {
-		err := ls(".")
+		err := ls(".", long)
 		if err != nil {
 			fmt.Printf("ls: %v\n", err)
 			return 3
@@ -37,7 +40,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 	var status int
 
 	for _, f := range flagSet.Args() {
-		if err := ls(f); err != nil {
+		if err := ls(f, long); err != nil {
 			fmt.Printf("ls: %v\n", err)
 			status = 4
 		}
@@ -52,7 +55,7 @@ func usage(flagSet *flag.FlagSet) {
 	flagSet.PrintDefaults()
 }
 
-func ls(path string) error {
+func ls(path string, long bool) error {
 
 	stat, errStat := os.Stat(path)
 	if errStat != nil {
@@ -60,15 +63,15 @@ func ls(path string) error {
 	}
 
 	if stat.IsDir() {
-		return lsDir(path)
+		return lsDir(path, long)
 	}
 
-	fmt.Println(path)
+	showInfo(path, long, stat)
 
 	return nil
 }
 
-func lsDir(path string) error {
+func lsDir(path string, long bool) error {
 
 	list, errList := ioutil.ReadDir(path)
 	if errList != nil {
@@ -76,8 +79,49 @@ func lsDir(path string) error {
 	}
 
 	for _, f := range list {
-		fmt.Println(f.Name())
+		show(f.Name(), long)
 	}
 
 	return nil
+}
+
+func show(path string, long bool) {
+
+	stat, errStat := os.Stat(path)
+	if errStat != nil {
+		fmt.Printf("ls: %v\n", errStat)
+	}
+
+	showInfo(path, long, stat)
+}
+
+func showInfo(path string, long bool, info os.FileInfo) {
+	if long {
+		showFileMode(info)
+	}
+
+	fmt.Println(path)
+}
+
+func showFileMode(info os.FileInfo) {
+	showBool(info.IsDir(), "d")
+	mode := info.Mode()
+	showBool(mode&0400 != 0, "r")
+	showBool(mode&0200 != 0, "w")
+	showBool(mode&0100 != 0, "x")
+	showBool(mode&0040 != 0, "r")
+	showBool(mode&0020 != 0, "w")
+	showBool(mode&0010 != 0, "x")
+	showBool(mode&0004 != 0, "r")
+	showBool(mode&0002 != 0, "w")
+	showBool(mode&0001 != 0, "x")
+	fmt.Print(" ")
+}
+
+func showBool(value bool, ifTrue string) {
+	if value {
+		fmt.Print(ifTrue)
+	} else {
+		fmt.Print("-")
+	}
 }
