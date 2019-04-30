@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/udhos/conbox/applets/cat"
 	"github.com/udhos/conbox/applets/chmod"
+	"github.com/udhos/conbox/applets/chown"
 	"github.com/udhos/conbox/applets/cp"
 	"github.com/udhos/conbox/applets/echo"
 	"github.com/udhos/conbox/applets/ls"
@@ -23,6 +24,7 @@ func loadApplets() map[string]common.AppletFunc {
 	tab := map[string]common.AppletFunc{
 		"cat":      cat.Run,
 		"chmod":    chmod.Run,
+		"chown":    chown.Run,
 		"cp":       cp.Run,
 		"echo":     echo.Run,
 		"ls":       ls.Run,
