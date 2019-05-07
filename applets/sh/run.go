@@ -22,6 +22,7 @@ type shell struct {
 	mainRunner       *interp.Runner
 	command          string
 	forceInteractive bool
+	flagSet          *flag.FlagSet
 }
 
 // Run executes the applet.
@@ -56,6 +57,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 		mainRunner:       runner,
 		command:          cmd,
 		forceInteractive: interactive,
+		flagSet:          flagSet,
 	}
 
 	switch err := runAll(s).(type) {
@@ -86,7 +88,7 @@ func runAll(s shell) error {
 		}
 		return run(s, r, "")
 	}
-	if flag.NArg() == 0 {
+	if s.flagSet.NArg() == 0 {
 		if s.forceInteractive {
 			return interactive(s, s.mainRunner.Stdin)
 		}
@@ -95,7 +97,7 @@ func runAll(s shell) error {
 		}
 		return run(s, os.Stdin, "")
 	}
-	for _, path := range flag.Args() {
+	for _, path := range s.flagSet.Args() {
 		if err := runPath(s, path); err != nil {
 			return err
 		}
