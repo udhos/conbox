@@ -15,16 +15,18 @@ import (
 // Run executes the applet.
 func Run(tab map[string]common.AppletFunc, args []string) int {
 
+	var help, interactive bool
+
 	flagSet := flag.NewFlagSet("shell", flag.ContinueOnError)
-	help := flagSet.Bool("h", false, "Show command-line help")
-	interactive := flagSet.Bool("i", false, "Force interactive mode")
+	flagSet.BoolVar(&help, "h", false, "Show command-line help")
+	flagSet.BoolVar(&interactive, "i", false, "Force interactive mode")
 
 	if err := flagSet.Parse(args); err != nil {
 		usage(flagSet)
 		return 1 // exit status
 	}
 
-	if *help {
+	if help {
 		usage(flagSet)
 		return 2 // exit status
 	}
@@ -34,18 +36,18 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 		// read input from stdin
 
 		stdin := os.Stdin
-		if !*interactive {
+		if !interactive {
 			// check if stdin is terminal (interactive mode)
 			info, errStat := stdin.Stat()
 			if errStat != nil {
 				fmt.Printf("shell: stat stdin: %v\n", errStat)
 			} else {
 				if (info.Mode() & os.ModeCharDevice) != 0 {
-					*interactive = true
+					interactive = true
 				}
 			}
 		}
-		return loop(tab, stdin, *interactive)
+		return loop(tab, stdin, interactive)
 	}
 
 	// read input from file
@@ -71,7 +73,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 		return 5 // exit status
 	}
 
-	return loop(tab, f, *interactive)
+	return loop(tab, f, interactive)
 }
 
 func usage(flagSet *flag.FlagSet) {
