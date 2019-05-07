@@ -33,7 +33,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 	flagSet := flag.NewFlagSet("sh", flag.ContinueOnError)
 	flagSet.BoolVar(&help, "h", false, "Show command-line help")
 	flagSet.BoolVar(&interactive, "i", false, "Force interactive mode")
-	flag.StringVar(&cmd, "c", "", "Command to be executed")
+	flagSet.StringVar(&cmd, "c", "", "Command to be executed")
 
 	if err := flagSet.Parse(args); err != nil {
 		usage(flagSet)
@@ -79,14 +79,18 @@ func usage(flagSet *flag.FlagSet) {
 
 func runAll(s shell) error {
 	if s.command != "" {
-		return run(s, strings.NewReader(s.command), "")
+		r := strings.NewReader(s.command)
+		if s.forceInteractive {
+			return interactive(s, r)
+		}
+		return run(s, r, "")
 	}
 	if flag.NArg() == 0 {
 		if s.forceInteractive {
-			return interactive(s)
+			return interactive(s, s.mainRunner.Stdin)
 		}
 		if terminal.IsTerminal(int(os.Stdin.Fd())) {
-			return interactive(s)
+			return interactive(s, s.mainRunner.Stdin)
 		}
 		return run(s, os.Stdin, "")
 	}
@@ -104,6 +108,9 @@ func runPath(s shell, path string) error {
 		return err
 	}
 	defer f.Close()
+	if s.forceInteractive {
+		return interactive(s, f)
+	}
 	return run(s, f, path)
 }
 
@@ -117,7 +124,7 @@ func run(s shell, reader io.Reader, name string) error {
 	return s.mainRunner.Run(ctx, prog)
 }
 
-func interactive(s shell) error {
+func interactive(s shell, reader io.Reader) error {
 	fmt.Fprintf(s.mainRunner.Stdout, "$ ")
 
 	var errStmt error
@@ -147,7 +154,7 @@ func interactive(s shell) error {
 		return true
 	}
 
-	errInter := s.parser.Interactive(s.mainRunner.Stdin, fn)
+	errInter := s.parser.Interactive(reader, fn)
 	if errInter == nil {
 		return errStmt
 	}
