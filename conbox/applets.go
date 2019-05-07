@@ -14,6 +14,7 @@ import (
 	"github.com/udhos/conbox/applets/pwd"
 	"github.com/udhos/conbox/applets/rm"
 	"github.com/udhos/conbox/applets/rmdir"
+	"github.com/udhos/conbox/applets/sh"
 	"github.com/udhos/conbox/applets/shell"
 	"github.com/udhos/conbox/applets/touch"
 	"github.com/udhos/conbox/applets/which"
@@ -35,6 +36,7 @@ func loadApplets() map[string]common.AppletFunc {
 		"ps":       ps.Run,
 		"rm":       rm.Run,
 		"rmdir":    rmdir.Run,
+		"sh":       sh.Run,
 		"shell":    shell.Run,
 		"touch":    touch.Run,
 		"which":    which.Run,
