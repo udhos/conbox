@@ -48,6 +48,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 	// create shell
 	runner, errInterp := interp.New(interp.StdIO(os.Stdin, os.Stdout, os.Stderr))
 	if errInterp != nil {
+		fmt.Printf("sh: new interp: %v\n", errInterp)
 		return 3
 	}
 	s := shell{
