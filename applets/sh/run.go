@@ -119,6 +119,9 @@ func run(s shell, reader io.Reader, name string) error {
 
 func interactive(s shell) error {
 	fmt.Fprintf(s.mainRunner.Stdout, "$ ")
+
+	var errStmt error
+
 	fn := func(stmts []*syntax.Stmt) bool {
 		if s.parser.Incomplete() {
 			fmt.Fprintf(s.mainRunner.Stdout, "> ")
@@ -129,15 +132,24 @@ func interactive(s shell) error {
 			switch err := s.mainRunner.Run(ctx, stmt).(type) {
 			case nil:
 			case interp.ShellExitStatus:
-				os.Exit(int(err))
+				//os.Exit(int(err))
+				errStmt = err
+				return false
 			case interp.ExitStatus:
 			default:
 				fmt.Fprintln(s.mainRunner.Stderr, err)
-				os.Exit(1)
+				//os.Exit(1)
+				errStmt = err
+				return false
 			}
 		}
 		fmt.Fprintf(s.mainRunner.Stdout, "$ ")
 		return true
 	}
-	return s.parser.Interactive(s.mainRunner.Stdin, fn)
+
+	errInter := s.parser.Interactive(s.mainRunner.Stdin, fn)
+	if errInter == nil {
+		return errStmt
+	}
+	return errInter
 }
