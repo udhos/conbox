@@ -128,6 +128,10 @@ func run(s shell, reader io.Reader, name string) error {
 }
 
 func interactive(s shell, reader io.Reader) error {
+
+	common.ShowVersion()
+	fmt.Fprintf(s.mainRunner.Stdout, "welcome to conbox shell 'sh'\n")
+
 	fmt.Fprintf(s.mainRunner.Stdout, "$ ")
 
 	var errStmt error
