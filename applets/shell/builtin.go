@@ -47,7 +47,7 @@ func builtinBuiltin(builtins map[string]builtinFunc, params []string) (bool, int
 		return b(builtins, params[1:])
 	}
 
-	fmt.Printf("cd: %s: not a shell builtin\n", prog)
+	fmt.Printf("builtin: %s: not a shell builtin\n", prog)
 
 	return false, 1
 }
