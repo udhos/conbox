@@ -5,6 +5,7 @@ import (
 	"github.com/udhos/conbox/applets/chmod"
 	"github.com/udhos/conbox/applets/chown"
 	"github.com/udhos/conbox/applets/cp"
+	"github.com/udhos/conbox/applets/dd"
 	"github.com/udhos/conbox/applets/echo"
 	"github.com/udhos/conbox/applets/ls"
 	"github.com/udhos/conbox/applets/mkdir"
@@ -27,6 +28,7 @@ func loadApplets() map[string]common.AppletFunc {
 		"chmod":    chmod.Run,
 		"chown":    chown.Run,
 		"cp":       cp.Run,
+		"dd":       dd.Run,
 		"echo":     echo.Run,
 		"ls":       ls.Run,
 		"mkdir":    mkdir.Run,
