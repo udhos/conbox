@@ -23,6 +23,7 @@ type shell struct {
 	command          string
 	forceInteractive bool
 	flagSet          *flag.FlagSet
+	applets          map[string]common.AppletFunc
 }
 
 // Run executes the applet.
@@ -58,6 +59,7 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 		command:          cmd,
 		forceInteractive: interactive,
 		flagSet:          flagSet,
+		applets:          tab,
 	}
 
 	switch err := runAll(s).(type) {
@@ -124,7 +126,19 @@ func run(s shell, reader io.Reader, name string) error {
 	}
 	s.mainRunner.Reset()
 	ctx := context.Background()
-	return s.mainRunner.Run(ctx, prog)
+	return runNode(s, ctx, prog)
+}
+
+func runNode(s shell, ctx context.Context, node syntax.Node) error {
+
+	args := []string{"xecho", "hi"} // FIXME how to get fields from node
+
+	if applet, found := s.applets[args[0]]; found {
+		exit := applet(s.applets, args[1:])
+		return interp.ExitStatus(exit)
+	}
+
+	return s.mainRunner.Run(ctx, node)
 }
 
 func interactive(s shell, reader io.Reader) error {
@@ -143,7 +157,7 @@ func interactive(s shell, reader io.Reader) error {
 		}
 		ctx := context.Background()
 		for _, stmt := range stmts {
-			switch err := s.mainRunner.Run(ctx, stmt).(type) {
+			switch err := runNode(s, ctx, stmt).(type) {
 			case nil:
 			case interp.ShellExitStatus:
 				//os.Exit(int(err))
