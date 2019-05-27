@@ -18,15 +18,18 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 	var files []string
 	var lines int
 
+LOOP:
 	for i := 0; i < len(args); i++ {
 		arg := args[i]
 		switch {
 		case arg == "--":
 			files = append(files, args[i+1:]...)
+			break LOOP
 		case arg == "-h":
 			help = true
 		case arg == "-n":
 			if i >= len(args)-1 {
+				fmt.Println("head: missing -n argument")
 				usage()
 				return 1 // exit status
 			}
@@ -91,7 +94,8 @@ func Run(tab map[string]common.AppletFunc, args []string) int {
 func usage() {
 	common.ShowVersion()
 	fmt.Println("head [OPTION]... [FILE]...")
-	fmt.Println("  -h   Show command-line help")
+	fmt.Println("  -h        Show command-line help")
+	fmt.Println("  -n lines  Print first 'lines' lines")
 }
 
 func headFile(lines int, path string) error {
