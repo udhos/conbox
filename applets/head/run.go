@@ -116,7 +116,11 @@ func headReader(lines int, r io.Reader) error {
 			fmt.Print(str)
 			line++
 		}
-		if errRead != nil {
+		switch errRead {
+		case io.EOF:
+			return nil
+		case nil:
+		default:
 			return errRead
 		}
 	}
