@@ -24,7 +24,6 @@ fi
 
 gofmt -s -w ./applets
 go fix ./applets/...
-go vet -vettool="$(which shadow)" ./applets/...
 go test ./applets/...
 go install -v ./applets/...
 
@@ -36,7 +35,6 @@ fi
 
 gofmt -s -w ./common
 go fix ./common
-go vet -vettool="$(which shadow)" ./common
 go test ./common
 go install -v ./common
 
@@ -48,7 +46,6 @@ fi
 
 gofmt -s -w ./conbox
 go fix ./conbox
-go vet -vettool="$(which shadow)" ./conbox
 go test ./conbox
 go install -v ./conbox
 
