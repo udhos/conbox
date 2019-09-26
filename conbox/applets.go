@@ -8,6 +8,7 @@ import (
 	"github.com/udhos/conbox/applets/dd"
 	"github.com/udhos/conbox/applets/echo"
 	"github.com/udhos/conbox/applets/head"
+	"github.com/udhos/conbox/applets/host"
 	"github.com/udhos/conbox/applets/ls"
 	"github.com/udhos/conbox/applets/mkdir"
 	"github.com/udhos/conbox/applets/mv"
@@ -32,6 +33,7 @@ func loadApplets() map[string]common.AppletFunc {
 		"dd":       dd.Run,
 		"echo":     echo.Run,
 		"head":     head.Run,
+		"host":     host.Run,
 		"ls":       ls.Run,
 		"mkdir":    mkdir.Run,
 		"mv":       mv.Run,

@@ -23,9 +23,9 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 # Install
 
 ```bash
-git clone https://github.com/udhos/conbox
+git clone https://github.com/udhos/conbox ;# clone outside of GOPATH
 cd conbox
-go install ./conbox
+GO111MODULE=on go install ./conbox
 ```
 
 # Usage

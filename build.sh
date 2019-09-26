@@ -22,6 +22,8 @@ if [ -n "$lint" ]; then
 	hash staticcheck 2>/dev/null && staticcheck ./applets
 fi
 
+export GO111MODULE=on
+
 gofmt -s -w ./applets
 go fix ./applets/...
 go test ./applets/...
