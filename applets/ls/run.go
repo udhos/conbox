@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"syscall"
 
 	"github.com/udhos/conbox/common"
@@ -80,7 +81,7 @@ func lsDir(path string, long bool) error {
 	}
 
 	for _, f := range list {
-		show(f.Name(), long)
+		show(filepath.Join(path, f.Name()), long)
 	}
 
 	return nil
@@ -91,6 +92,7 @@ func show(path string, long bool) {
 	stat, errStat := os.Stat(path)
 	if errStat != nil {
 		fmt.Printf("ls: %v\n", errStat)
+		return
 	}
 
 	showInfo(path, long, stat)

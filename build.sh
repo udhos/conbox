@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export GO111MODULE=on
+
 msg() {
 	echo 2>&1 "$0": $@
 }
@@ -21,8 +23,6 @@ if [ -n "$lint" ]; then
 	hash golint 2>/dev/null && golint ./applets
 	hash staticcheck 2>/dev/null && staticcheck ./applets
 fi
-
-export GO111MODULE=on
 
 gofmt -s -w ./applets
 go fix ./applets/...
