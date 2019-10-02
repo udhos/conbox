@@ -195,6 +195,7 @@ Unfortunately these projects seem inactive:
 - https://github.com/laher/someutils
 - https://github.com/shirou/toybox
 - https://github.com/u35s/busybox
+- https://github.com/ericlagergren/go-coreutils
 
 ## Non-Go projects
 
