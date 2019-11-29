@@ -19,6 +19,7 @@ import (
 	"github.com/udhos/conbox/applets/rmdir"
 	"github.com/udhos/conbox/applets/sh"
 	"github.com/udhos/conbox/applets/shell"
+	"github.com/udhos/conbox/applets/sleep"
 	"github.com/udhos/conbox/applets/touch"
 	"github.com/udhos/conbox/applets/which"
 	"github.com/udhos/conbox/common"
@@ -44,6 +45,7 @@ func loadApplets() map[string]common.AppletFunc {
 		"rmdir":    rmdir.Run,
 		"sh":       sh.Run,
 		"shell":    shell.Run,
+		"sleep":    sleep.Run,
 		"touch":    touch.Run,
 		"which":    which.Run,
 	}

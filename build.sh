@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export GO111MODULE=on
+export CGO_ENABLED=0
 
 msg() {
 	echo 2>&1 "$0": $@
