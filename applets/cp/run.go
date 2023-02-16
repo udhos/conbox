@@ -1,3 +1,4 @@
+// Package cp implements an utility.
 package cp
 
 import (

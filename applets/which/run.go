@@ -1,3 +1,4 @@
+// Package which implements an utility.
 package which
 
 import (

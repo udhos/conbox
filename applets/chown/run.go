@@ -1,3 +1,4 @@
+// Package chown implements an utility.
 package chown
 
 import (

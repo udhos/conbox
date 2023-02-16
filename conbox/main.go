@@ -1,3 +1,4 @@
+// Package main implements conbox.
 package main
 
 import (

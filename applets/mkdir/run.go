@@ -1,3 +1,4 @@
+// Package mkdir implements an utility.
 package mkdir
 
 import (

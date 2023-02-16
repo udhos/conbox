@@ -1,3 +1,4 @@
+// Package mv implements an utility.
 package mv
 
 import (

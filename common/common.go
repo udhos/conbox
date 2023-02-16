@@ -1,3 +1,4 @@
+// Package common holds some utilities.
 package common
 
 import (
@@ -7,7 +8,7 @@ import (
 	"strings"
 )
 
-const version = "0.1"
+const version = "0.1.0"
 
 // AppletFunc type is the signature for the applet Run() function.
 type AppletFunc func(tab map[string]AppletFunc, args []string) int

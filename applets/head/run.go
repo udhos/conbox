@@ -1,3 +1,4 @@
+// Package head implements an utility.
 package head
 
 import (

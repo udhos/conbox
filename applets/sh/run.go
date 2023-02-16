@@ -1,3 +1,4 @@
+// Package sh implements an utility.
 package sh
 
 import (
@@ -8,6 +9,7 @@ import (
 	"io"
 	"os"
 	"strings"
+
 	//"os/exec"
 	//"path/filepath"
 
@@ -126,10 +128,10 @@ func run(s shell, reader io.Reader, name string) error {
 	}
 	s.mainRunner.Reset()
 	ctx := context.Background()
-	return runNode(s, ctx, prog)
+	return runNode(ctx, s, prog)
 }
 
-func runNode(s shell, ctx context.Context, node syntax.Node) error {
+func runNode(ctx context.Context, s shell, node syntax.Node) error {
 
 	args := []string{"xecho", "hi"} // FIXME how to get fields from node
 
@@ -157,7 +159,7 @@ func interactive(s shell, reader io.Reader) error {
 		}
 		ctx := context.Background()
 		for _, stmt := range stmts {
-			switch err := runNode(s, ctx, stmt).(type) {
+			switch err := runNode(ctx, s, stmt).(type) {
 			case nil:
 			case interp.ShellExitStatus:
 				//os.Exit(int(err))

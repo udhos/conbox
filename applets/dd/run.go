@@ -1,3 +1,4 @@
+// Package dd implements an utility.
 package dd
 
 import (

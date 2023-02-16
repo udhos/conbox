@@ -1,3 +1,4 @@
+// Package printenv implements an utility.
 package printenv
 
 import (

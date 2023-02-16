@@ -1,3 +1,4 @@
+// Package chmod implements an utility.
 package chmod
 
 import (

@@ -1,3 +1,4 @@
+// Package shell implements an utility.
 package shell
 
 import (

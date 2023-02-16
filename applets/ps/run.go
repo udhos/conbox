@@ -1,3 +1,4 @@
+// Package ps implements an utility.
 package ps
 
 import (

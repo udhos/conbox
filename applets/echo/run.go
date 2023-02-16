@@ -1,3 +1,4 @@
+// Package echo implements an utility.
 package echo
 
 import (

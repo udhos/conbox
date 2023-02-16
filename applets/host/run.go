@@ -1,3 +1,4 @@
+// Package host implements an utility.
 package host
 
 import (

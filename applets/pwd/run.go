@@ -1,3 +1,4 @@
+// Package pwd implements an utility.
 package pwd
 
 import (

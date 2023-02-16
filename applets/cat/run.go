@@ -1,3 +1,4 @@
+// Package cat implements an utility.
 package cat
 
 import (

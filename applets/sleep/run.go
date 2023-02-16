@@ -1,3 +1,4 @@
+// Package sleep implements an utility.
 package sleep
 
 import (

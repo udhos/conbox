@@ -1,3 +1,4 @@
+// Package rm implements an utility.
 package rm
 
 import (

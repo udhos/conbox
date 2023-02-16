@@ -1,3 +1,4 @@
+// Package ls implements an utility.
 package ls
 
 import (

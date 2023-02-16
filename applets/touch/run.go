@@ -1,3 +1,4 @@
+// Package touch implements an utility.
 package touch
 
 import (
